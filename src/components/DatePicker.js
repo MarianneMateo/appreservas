@@ -4,25 +4,32 @@ import { DateRangePicker } from 'react-date-range';
 import { makeStyles, Typography, InputBase, Button } from '@material-ui/core';
 import { People } from '@material-ui/icons';
 import { useNavigate } from 'react-router-dom';
-
-const selectionRange = {
-	startDate: new Date(2022, 8, 12),
-	endDate: new Date(2022, 8, 12),
-	key: 'selection',
-};
+import { useSelector, useDispatch } from 'react-redux';
+import { setStart, selectStart } from '../features/startSlice';
+import { setEnd, selectEnd } from '../features/endSlice';
 
 const DatePicker = () => {
 	const classes = useStyles();
 	const navigate = useNavigate();
+	const start = useSelector(selectStart);
+	const end = useSelector(selectEnd);
+	const dispatch = useDispatch()
 
-	const handleSelect = () => {};
+	const selectionRange = {
+		startDate: start,
+		endDate: end,
+		key: 'selection',
+	};
+
+	const handleSelect = (ranges) => {
+		console.log(ranges);
+		dispatch(setStart(ranges.selection.startDate.getTime()));
+		dispatch(setEnd(ranges.selection.endDate.getTime()));
+	};
 
 	return (
 		<div className={classes.root}>
-			<DateRangePicker
-				ranges={[selectionRange]}
-				/* className={classes.} */ onChange={handleSelect}
-			/>
+			<DateRangePicker ranges={[selectionRange]} onChange={handleSelect} />
 			<div className={classes.inputSection}>
 				<Typography variant="h6">Number of guests</Typography>
 				<div className={classes.people}>
@@ -32,9 +39,7 @@ const DatePicker = () => {
 					/>
 					<People />
 				</div>
-				<Button onClick={() => navigate('/search')}>
-					Search Rooms
-				</Button>
+				<Button onClick={() => navigate('/search')}>Search Rooms</Button>
 			</div>
 		</div>
 	);
@@ -58,25 +63,25 @@ const useStyles = makeStyles((theme) => ({
 		'& h6': {
 			textAlign: 'center',
 		},
-    '& button': {
-      backgroundColor: '#f3f2f2'
-    },
+		'& button': {
+			backgroundColor: '#f3f2f2',
+		},
 		'& button:hover': {
 			backgroundColor: 'rgba(209, 169, 48, 0.9)',
 			color: '#fff',
 		},
 	},
-  people: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
+	people: {
+		display: 'flex',
+		justifyContent: 'center',
+		alignItems: 'center',
+	},
 	input: {
-    width: '7vw',
-    border: '1px solid #ccc',
-    margin: theme.spacing(0,1,1,0),
-    padding: theme.spacing(1,0,1,2)
-  },
+		width: '7vw',
+		border: '1px solid #ccc',
+		margin: theme.spacing(0, 1, 1, 0),
+		padding: theme.spacing(1, 0, 1, 2),
+	},
 }));
 
 export default DatePicker;

@@ -1,4 +1,5 @@
 import { makeStyles, Typography, Button } from '@material-ui/core';
+import { Link } from 'react-router-dom';
 import banner from '../img/banner.jpg';
 
 const Banner = () => {
@@ -7,7 +8,9 @@ const Banner = () => {
 		<div className={classes.root}>
 			<div className={classes.info}>
 				<Typography variant="h2">Plan your getaway!</Typography>
-				<Button variant="contained">Check our rooms</Button>
+				<Link to="/search">
+					<Button variant="contained">Check our rooms</Button>
+				</Link>
 			</div>
 		</div>
 	);

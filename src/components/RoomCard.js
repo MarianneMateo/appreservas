@@ -29,6 +29,7 @@ const useStyles = makeStyles((theme) => ({
 	},
 	images: {
 		overflow: 'hidden',
+		borderRadius: '10px',
 	},
 	media: {
 		height: '400px',
